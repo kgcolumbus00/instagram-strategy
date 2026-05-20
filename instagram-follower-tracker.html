@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Instagram Follower Tracker</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      min-height: 100vh;
+      padding: 32px 16px;
+    }
+
+    .container { max-width: 760px; margin: 0 auto; }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle { color: #888; font-size: 0.9rem; margin-bottom: 32px; }
+
+    .instructions {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+    }
+
+    .instructions h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 12px; }
+
+    .instructions ol { padding-left: 18px; line-height: 2; font-size: 0.9rem; color: #ccc; }
+
+    .instructions strong { color: #fff; }
+
+    .instructions .note {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: #666;
+      border-top: 1px solid #222;
+      padding-top: 12px;
+    }
+
+    .upload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 540px) { .upload-grid { grid-template-columns: 1fr; } }
+
+    .upload-box {
+      border: 2px dashed #333;
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+
+    .upload-box:hover { border-color: #555; background: #111; }
+    .upload-box.loaded { border-color: #2ea043; border-style: solid; background: #0d1f12; }
+    .upload-box.error { border-color: #c0392b; border-style: solid; background: #1a0a0a; }
+
+    .upload-box input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+
+    .upload-icon { font-size: 2rem; margin-bottom: 10px; }
+    .upload-label { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .upload-hint { font-size: 0.78rem; color: #666; }
+    .upload-status { font-size: 0.82rem; margin-top: 8px; font-weight: 600; }
+    .upload-box.loaded .upload-status { color: #2ea043; }
+    .upload-box.error .upload-status { color: #e74c3c; }
+
+    .analyze-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-bottom: 28px;
+    }
+
+    .analyze-btn:hover { opacity: 0.88; }
+    .analyze-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 540px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat-card {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+
+    .stat-number { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+    .stat-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #888; margin-top: 4px; }
+
+    .stat-card.red .stat-number { color: #e74c3c; }
+    .stat-card.green .stat-number { color: #2ea043; }
+    .stat-card.blue .stat-number { color: #3498db; }
+    .stat-card.yellow .stat-number { color: #f39c12; }
+
+    .section {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid #1a1a1a;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .section-header:hover { background: #161616; }
+
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-badge {
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 700;
+    }
+
+    .badge-red { background: #2a0a0a; color: #e74c3c; }
+    .badge-green { background: #0a1f0a; color: #2ea043; }
+    .badge-blue { background: #0a1222; color: #3498db; }
+
+    .section-toggle { color: #555; font-size: 0.8rem; }
+
+    .user-list {
+      max-height: 380px;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+
+    .user-list::-webkit-scrollbar { width: 6px; }
+    .user-list::-webkit-scrollbar-track { background: #0d0d0d; }
+    .user-list::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+    .user-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      transition: background 0.15s;
+    }
+
+    .user-row:hover { background: #161616; }
+
+    .user-name { font-size: 0.9rem; font-weight: 500; }
+
+    .user-link {
+      font-size: 0.78rem;
+      color: #888;
+      text-decoration: none;
+      padding: 4px 10px;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .user-link:hover { border-color: #555; color: #ccc; }
+
+    .search-bar {
+      padding: 10px 20px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .search-bar input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #f0f0f0;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .search-bar input:focus { border-color: #444; }
+    .search-bar input::placeholder { color: #555; }
+
+    .export-btn {
+      display: inline-block;
+      margin: 12px 20px;
+      padding: 8px 16px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      color: #ccc;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .export-btn:hover { background: #222; color: #fff; }
+
+    .empty-state { padding: 40px 20px; text-align: center; color: #555; font-size: 0.9rem; }
+
+    .privacy-note {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #444;
+      margin-top: 24px;
+    }
+
+    .privacy-note span { color: #2ea043; }
+
+    .results-section { display: none; }
+    .results-section.visible { display: block; }
+
+    .collapsed .user-list,
+    .collapsed .search-bar,
+    .collapsed .export-btn { display: none; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <h1>Instagram Follower Tracker</h1>
+  <p class="subtitle">See exactly who doesn't follow you back — fully private, runs in your browser only.</p>
+
+  <div class="instructions">
+    <h2>How to get your Instagram data</h2>
+    <ol>
+      <li>Open Instagram → tap your profile → <strong>☰ menu</strong> → <strong>Settings and privacy</strong></li>
+      <li>Scroll to <strong>Your activity</strong> → <strong>Download your information</strong></li>
+      <li>Tap <strong>Download or transfer information</strong> → <strong>Some of your information</strong></li>
+      <li>Select <strong>Followers and following</strong> only, then tap <strong>Next</strong></li>
+      <li>Choose <strong>Download to device</strong> → set format to <strong>JSON</strong> → request download</li>
+      <li>Check your email in a few hours — Instagram will send a zip file</li>
+      <li>Unzip it and find the <strong>followers_and_following</strong> folder</li>
+      <li>Upload <strong>followers_1.json</strong> and <strong>following.json</strong> below</li>
+    </ol>
+    <p class="note">Your data never leaves your browser. No server, no account needed.</p>
+  </div>
+
+  <div class="upload-grid">
+    <div class="upload-box" id="followersBox">
+      <input type="file" id="followersFile" accept=".json" />
+      <div class="upload-icon">👥</div>
+      <div class="upload-label">Followers File</div>
+      <div class="upload-hint">followers_1.json</div>
+      <div class="upload-status" id="followersStatus"></div>
+    </div>
+    <div class="upload-box" id="followingBox">
+      <input type="file" id="followingFile" accept=".json" />
+      <div class="upload-icon">➡️</div>
+      <div class="upload-label">Following File</div>
+      <div class="upload-hint">following.json</div>
+      <div class="upload-status" id="followingStatus"></div>
+    </div>
+  </div>
+
+  <button class="analyze-btn" id="analyzeBtn" disabled>Upload both files to analyze</button>
+
+  <div class="results-section" id="results">
+
+    <div class="stats-grid">
+      <div class="stat-card red">
+        <div class="stat-number" id="statNotFollowingBack">—</div>
+        <div class="stat-label">Not Following Back</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-number" id="statMutual">—</div>
+        <div class="stat-label">Mutual Follows</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-number" id="statFollowers">—</div>
+        <div class="stat-label">Total Followers</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-number" id="statFollowing">—</div>
+        <div class="stat-label">Total Following</div>
+      </div>
+    </div>
+
+    <!-- Not following back -->
+    <div class="section" id="sectionNotBack">
+      <div class="section-header" onclick="toggleSection('sectionNotBack')">
+        <div class="section-title">
+          🚫 You follow — they don't follow back
+          <span class="section-badge badge-red" id="badgeNotBack">0</span>
+        </div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search usernames..." oninput="filterList('listNotBack', this.value)" />
+      </div>
+      <button class="export-btn" onclick="exportList('notFollowingBack', 'not-following-back')">Export as .txt</button>
+      <div class="user-list" id="listNotBack"></div>
+    </div>
+
+    <!-- Fans (followers who you don't follow back) -->
+    <div class="section" id="sectionFans">
+      <div class="section-header" onclick="toggleSection('sectionFans')">
+        <div class="section-title">
+          ⭐ They follow you — you don't follow back
+          <span class="section-badge badge-blue" id="badgeFans">0</span>
+        </div>
+        <div class="section-toggle">▼</div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search usernames..." oninput="filterList('listFans', this.value)" />
+      </div>
+      <button class="export-btn" onclick="exportList('fans', 'fans-not-followed-back')">Export as .txt</button>
+      <div class="user-list" id="listFans"></div>
+    </div>
+
+    <!-- Mutual -->
+    <div class="section collapsed" id="sectionMutual">
+      <div class="section-header" onclick="toggleSection('sectionMutual')">
+        <div class="section-title">
+          ✅ Mutual follows
+          <span class="section-badge badge-green" id="badgeMutual">0</span>
+        </div>
+        <div class="section-toggle">▶</div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search usernames..." oninput="filterList('listMutual', this.value)" />
+      </div>
+      <div class="user-list" id="listMutual"></div>
+    </div>
+
+  </div><!-- /results -->
+
+  <p class="privacy-note"><span>100% private</span> — all processing happens in your browser. No data is uploaded anywhere.</p>
+
+</div>
+
+<script>
+  let data = { followers: null, following: null };
+  let lists = { notFollowingBack: [], fans: [], mutual: [] };
+
+  function extractUsernames(json) {
+    const results = [];
+    const arr = Array.isArray(json) ? json : (json.relationships_following || json.relationships_followers || []);
+    for (const item of arr) {
+      const entries = item.string_list_data || [];
+      for (const e of entries) {
+        if (e.value) results.push({ username: e.value, href: e.href || `https://www.instagram.com/${e.value}/` });
+      }
+    }
+    return results;
+  }
+
+  function handleFile(type, file) {
+    const box = document.getElementById(type === 'followers' ? 'followersBox' : 'followingBox');
+    const status = document.getElementById(type === 'followers' ? 'followersStatus' : 'followingStatus');
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const json = JSON.parse(e.target.result);
+        const users = extractUsernames(json);
+        if (users.length === 0) throw new Error('No users found — make sure you selected JSON format');
+        data[type] = users;
+        box.className = 'upload-box loaded';
+        status.textContent = `✓ ${users.length} accounts loaded`;
+      } catch (err) {
+        box.className = 'upload-box error';
+        status.textContent = '✗ ' + err.message;
+        data[type] = null;
+      }
+      updateBtn();
+    };
+    reader.readAsText(file);
+  }
+
+  document.getElementById('followersFile').addEventListener('change', (e) => {
+    if (e.target.files[0]) handleFile('followers', e.target.files[0]);
+  });
+  document.getElementById('followingFile').addEventListener('change', (e) => {
+    if (e.target.files[0]) handleFile('following', e.target.files[0]);
+  });
+
+  function updateBtn() {
+    const btn = document.getElementById('analyzeBtn');
+    if (data.followers && data.following) {
+      btn.disabled = false;
+      btn.textContent = 'Analyze My Followers';
+    }
+  }
+
+  document.getElementById('analyzeBtn').addEventListener('click', analyze);
+
+  function analyze() {
+    const followerSet = new Set(data.followers.map(u => u.username.toLowerCase()));
+    const followingSet = new Set(data.following.map(u => u.username.toLowerCase()));
+    const followerMap = Object.fromEntries(data.followers.map(u => [u.username.toLowerCase(), u]));
+    const followingMap = Object.fromEntries(data.following.map(u => [u.username.toLowerCase(), u]));
+
+    lists.notFollowingBack = data.following.filter(u => !followerSet.has(u.username.toLowerCase()));
+    lists.fans = data.followers.filter(u => !followingSet.has(u.username.toLowerCase()));
+    lists.mutual = data.following.filter(u => followerSet.has(u.username.toLowerCase()));
+
+    document.getElementById('statNotFollowingBack').textContent = lists.notFollowingBack.length;
+    document.getElementById('statMutual').textContent = lists.mutual.length;
+    document.getElementById('statFollowers').textContent = data.followers.length;
+    document.getElementById('statFollowing').textContent = data.following.length;
+    document.getElementById('badgeNotBack').textContent = lists.notFollowingBack.length;
+    document.getElementById('badgeFans').textContent = lists.fans.length;
+    document.getElementById('badgeMutual').textContent = lists.mutual.length;
+
+    renderList('listNotBack', lists.notFollowingBack);
+    renderList('listFans', lists.fans);
+    renderList('listMutual', lists.mutual);
+
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function renderList(listId, users) {
+    const el = document.getElementById(listId);
+    if (users.length === 0) {
+      el.innerHTML = '<div class="empty-state">None found.</div>';
+      return;
+    }
+    el.innerHTML = users.map(u => `
+      <div class="user-row" data-username="${u.username.toLowerCase()}">
+        <div class="user-name">@${u.username}</div>
+        <a class="user-link" href="${u.href}" target="_blank" rel="noopener">View Profile →</a>
+      </div>
+    `).join('');
+  }
+
+  function filterList(listId, query) {
+    const rows = document.getElementById(listId).querySelectorAll('.user-row');
+    const q = query.toLowerCase();
+    rows.forEach(row => {
+      row.style.display = row.dataset.username.includes(q) ? '' : 'none';
+    });
+  }
+
+  function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const toggle = section.querySelector('.section-toggle');
+    section.classList.toggle('collapsed');
+    toggle.textContent = section.classList.contains('collapsed') ? '▶' : '▼';
+  }
+
+  function exportList(listKey, filename) {
+    const usernames = lists[listKey].map(u => '@' + u.username).join('\n');
+    const blob = new Blob([usernames], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `instagram-${filename}.txt`;
+    a.click();
+  }
+</script>
+</body>
+</html>
