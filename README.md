@@ -94,18 +94,58 @@ Film once → edit for vertical 9:16 first (Reels/TikTok) → export clean versi
 
 ---
 
+## Editing Workflows by Content Type
+
+**DJI Osmo footage → cinematic Reel or video post:**
+```
+DaVinci Resolve  →  CapCut  →  Instagram
+(color grade,       (captions, trending
+ cut, trim)          audio, crop to 9:16)
+```
+
+**iPhone clip → quick Reel:**
+```
+CapCut (mobile or desktop)  →  Instagram
+```
+
+**Travel photo → grid post:**
+```
+Lightroom mobile  →  Instagram
+(color grade the still)
+```
+
+**Story → post directly from iPhone.** No editing app needed.
+
+---
+
 ## Video Editing Software Recommendations
+
+### Desktop (Windows) — For DJI Osmo Footage
 
 | Tool | Price | Best For |
 |---|---|---|
-| CapCut | Free / $7.99/month Pro | Short-form Reels, auto-captions, TikTok export |
-| DaVinci Resolve | Free | Long-form editing, color grading DJI footage |
-| DaVinci Resolve Studio | $295 one-time | Adds AI tools (Magic Mask, Voice Isolation, Smart Reframe) |
-| Adobe Premiere Pro | $22.99/month | Professional, brand deals, After Effects integration |
+| **DaVinci Resolve 20** (free, stable) | Free | DJI footage editing, color grading — start here |
+| DaVinci Resolve Studio 20 | $295 one-time | Adds AI tools: Magic Mask, Voice Isolation, Smart Reframe |
+| CapCut Desktop | Free / $7.99/mo Pro | Reels workflow, captions, vertical export |
+| Adobe Premiere Pro | $22.99/month | Professional tier, After Effects integration, brand work |
 | OpusClip | ~$9–19/month | Auto-clip long videos into viral shorts |
-| Descript | ~$12–24/month | Transcript-based editing, auto-remove filler words |
+| Descript | ~$12–24/month | Transcript-based editing, removes filler words |
 
-**Starting recommendation:** CapCut (free) for Reels + DaVinci Resolve (free) for DJI footage
+> **Install:** Download **DaVinci Resolve 20 → Windows (x86)** from blackmagicdesign.com — not the ARM version, not the Beta, not Studio.
+
+### Mobile (iPhone) — Quick Edits On the Go
+
+| App | Best For | Cost |
+|---|---|---|
+| **CapCut** | Reels editing, auto-captions, trending templates | Free / $7.99/mo |
+| **Adobe Lightroom** | Color grading travel photos — free tier is strong | Free / $4.99/mo |
+| **Snapseed** | Detailed photo touch-ups, healing tool, selective edits | Free (Google) |
+| **VSCO** | Consistent preset aesthetic across the grid | Free / $29.99/yr |
+| **InShot** | Quick video trims, transitions, music sync | Free / ~$3.99/mo |
+
+> **Skip:** ImagineArt (AI image generation, not editing), Canva (templates/graphics, not for real footage)
+
+**Starting recommendation:** DaVinci Resolve 20 (desktop, free) + CapCut (mobile, free) + Lightroom mobile (photos, free)
 
 ---
 
