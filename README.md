@@ -94,13 +94,70 @@ Film once → edit for vertical 9:16 first (Reels/TikTok) → export clean versi
 
 ---
 
+## Japan Post Plan
+
+### Series Structure (drip over 3–4 weeks, don't post all at once)
+
+| Post | Theme | Format |
+|---|---|---|
+| 1 | **Cinematic opener** — best 5–8 shots from the whole trip, high energy, good music | Reel (30–45 sec) |
+| 2 | **Tokyo** — day energy, streets, food, crowds | Reel or carousel |
+| 3 | **Osaka** — different vibe, more relaxed, distinct aesthetic | Reel or carousel |
+| 4 | **Night post** — lights, atmosphere, nightlife energy | Reel |
+| 5 | **Quiet/personal moment** — something unexpected, shows depth | Single photo or short clip |
+
+**Start with Post #1.** That's the reintroduction after being quiet. Make it the strongest thing you have.
+
+### Opener Reel Clip Formula (8–12 clips, 30–45 seconds)
+
+| Role | What it does |
+|---|---|
+| Opening shot | Stops the scroll — wide, cinematic, unexpected. Best clip regardless of when it was filmed |
+| 2–3 establishing shots | Shows the place — skyline, temple, busy crossing, neon streets |
+| 2–3 energy moments | Raises tempo — club, crowd, street food stall, train platform |
+| 1–2 food shots | Universal appeal, close-up, visually interesting |
+| 1–2 candid/friend moments | Humanizes it — you were actually there living it |
+| Closing shot | Atmospheric, lingers — night lights, quiet moment |
+
+**Vary clip length** — mix 1-second flashes with 3–4 second breathing shots. Contrast keeps eyes on screen.
+
+### Music — Annyeonghaseo by Yuki Chiba
+Song is available on Instagram but not CapCut. Workflow:
+1. Build entire edit in CapCut with **no audio**
+2. Export clean
+3. Upload to Instagram → tap **Add audio** → search the song → sync where you want it to start
+4. Post
+
+### Orientation for Horizontal DJI Footage
+
+| Option | How it looks | When to use |
+|---|---|---|
+| **Blur background (recommended for Reels)** | Horizontal clip centered, blurred version fills 9:16 frame | Reels — most common pro technique |
+| **Letterbox (black bars)** | Black bars top and bottom in 4:5 frame | Feed posts — looks intentionally cinematic |
+| **Native 16:9 landscape** | Smaller in grid, full width when tapped | Strong images that sell at small size |
+
+---
+
 ## Editing Workflows by Content Type
 
 **DJI Osmo footage → cinematic Reel or video post:**
 ```
-DaVinci Resolve  →  CapCut  →  Instagram
-(color grade,       (captions, trending
- cut, trim)          audio, crop to 9:16)
+SD card (original files)
+       ↓
+DaVinci Resolve          — color grade, trim, export H.264 1080p high bitrate
+       ↓
+CapCut                   — cuts, captions, blur background, export 1080p
+       ↓
+Instagram                — add Yuki Chiba audio, post on WiFi
+```
+
+**DJI footage → YouTube:**
+```
+SD card (original files)
+       ↓
+DaVinci Resolve          — color grade, export 4K (YouTube rewards higher res)
+       ↓
+Upload directly to YouTube
 ```
 
 **iPhone clip → quick Reel:**
@@ -115,6 +172,55 @@ Lightroom mobile  →  Instagram
 ```
 
 **Story → post directly from iPhone.** No editing app needed.
+
+---
+
+## File Management & Storage
+
+### Folder Structure (on external hard drive)
+```
+Japan Trip/
+├── Raw Footage/
+│   ├── DJI/        ← copy DCIM + MISC folders from SD card
+│   └── iPhone/     ← AirDrop or cable transfer from iPhone
+└── Exports/        ← finished videos ready to post (small, fine on local disk)
+```
+
+### Storage Situation
+- Local disk: ~83GB free — not enough for full 100GB of footage
+- SD card: 128GB, ~100GB used — **keep as backup, do not format yet**
+- External hard drive: owned, needs to be found — footage goes here
+- Cloud: 15GB free tiers (OneDrive/Google Drive) not large enough for raw footage
+- **Long term:** 2TB external drive (~$55–60, WD Elements or Seagate Portable) — one-time cost beats monthly cloud plan for video
+
+### Quality Rules — Never Lose Quality
+- **Never export clips through DJI Mimo** — it re-encodes and loses quality
+- Use Mimo only for reviewing and favoriting clips to identify keepers
+- Always work from original SD card files in DaVinci
+- DaVinci reads originals, never modifies them
+- Each app export = one quality loss — minimize steps between SD card and final post
+
+### DaVinci Resolve Export Settings (Deliver page)
+| Setting | Value |
+|---|---|
+| Format | MP4 |
+| Codec | H.264 |
+| Resolution | 1920x1080 (1080p) for Instagram / 4K for YouTube |
+| Quality | ~20,000–25,000 kbps or "Best" |
+| Frame rate | Match original footage (24fps or 30fps) |
+
+### Clip Selection Workflow
+1. Open DJI Mimo on iPad → browse footage → heart/favorite the keepers
+2. Note filenames (`DJI_0023.MP4`) or timestamps in Notes app
+3. On PC → File Explorer → SD card → copy only those specific files to external drive
+4. iPhone clips → star/favorite in Photos app → AirDrop or cable transfer just those
+
+### DaVinci Lag Fix
+DJI footage is H.265/HEVC — hard to decode in real-time. Fix:
+- Right-click clip in Media Pool → **Generate Optimized Media**
+- Or: Preferences → Playback → enable **"Automatically create optimized media"**
+- Drop playback quality to Half or Quarter while editing (rocket ship icon in viewer)
+- You edit at lower quality, always export at full quality
 
 ---
 
