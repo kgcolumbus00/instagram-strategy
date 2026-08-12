@@ -4,14 +4,14 @@ Personal content strategy doc and tools for building out the Instagram profile a
 
 ---
 
-## Profile Snapshot (May 2026)
+## Profile Snapshot (August 2026)
 
 | Metric | Value |
 |---|---|
 | Handle | @keving107 |
 | Posts | 1 |
-| Followers | 713 |
-| Following | 933 |
+| Followers | ~740 |
+| Following | ~950+ |
 | Bio | Ohio State Alum |
 | Profile | Public |
 | Highlights | JP, CLG, HN, MX |
@@ -264,3 +264,15 @@ DJI footage is H.265/HEVC — hard to decode in real-time. Fix:
 ## Raw Footage Sources
 - iPhone (travel, concerts, daily moments)
 - DJI Osmo (cinematic travel footage — primary differentiator)
+
+---
+
+## Session Log
+
+### 2026-08-12
+- Follower/following counts updated (~740 / ~950+). Ratio cleanup still open.
+- **Unfollow criteria refined:** this is not a mass unfollow of the real network (school/church/family — see "Audience Reality" above, still holds). It's specifically about accounts followed mainly because the person is attractive, who Kevin doesn't know personally and who don't follow back. Framing: following ~950 people, a chunk of them attractive strangers, undercuts the exact "not performing for attention" identity this strategy is built around.
+- Reminder: use the follower-tracker tool in this repo once the Instagram data export lands, instead of a manual scroll — it's already built for exactly this.
+- **Content pillars confirmed:** life (throughline) + travel (subplot, not headline — consistent with "don't make travel the entire personality" above) + business (as it develops) + dating/relationships (organic, not forced). All filtered through a God-honoring tone — not a separate pillar, a constraint on all of them.
+- **Editing plan confirmed:** matches this doc's existing recommendation — CapCut for cuts/pacing/music sync (on-ramp, faster results), DaVinci Resolve LUTs/one-click presets before manual color grading (avoid getting stuck on the deep end of Resolve before anything's posted).
+- **Sequencing note:** Instagram work is explicitly secondary to the job search right now. Kevin's own call — worth respecting: apply to jobs first each session before touching content work, so this doesn't become a way to avoid the harder, scarier task (submitting applications).
